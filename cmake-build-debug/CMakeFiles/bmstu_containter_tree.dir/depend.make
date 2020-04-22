@@ -3,5 +3,4 @@
 
 CMakeFiles/bmstu_containter_tree.dir/main.cpp.o: ../include/BinaryTree.h
 CMakeFiles/bmstu_containter_tree.dir/main.cpp.o: ../main.cpp
-CMakeFiles/bmstu_containter_tree.dir/main.cpp.o: ../sources/BinaryTree.cpp
 
