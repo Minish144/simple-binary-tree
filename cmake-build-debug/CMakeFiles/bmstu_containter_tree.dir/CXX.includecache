@@ -6,7 +6,17 @@
 
 #IncludeRegexTransform: 
 
+/Users/minish144/bmstu-containter-tree/include/BinaryTree.h
+
 /Users/minish144/bmstu-containter-tree/main.cpp
 iostream
 -
+./include/BinaryTree.h
+/Users/minish144/bmstu-containter-tree/include/BinaryTree.h
+./sources/BinaryTree.cpp
+/Users/minish144/bmstu-containter-tree/sources/BinaryTree.cpp
+
+/Users/minish144/bmstu-containter-tree/sources/BinaryTree.cpp
+../include/BinaryTree.h
+/Users/minish144/bmstu-containter-tree/include/BinaryTree.h
 
