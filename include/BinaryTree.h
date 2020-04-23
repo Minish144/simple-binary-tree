@@ -39,7 +39,9 @@ public:
     ~BinaryTree();
     Node<T>* getRoot();
     Node<T>* insert(Node<T> *root, T value);
-    void display(Node<T> *root);
+    void inorderTraversal (Node<T> *root);
+    void preorderTraversal (Node<T> *root);
+    void postorderTraversal (Node<T> *root);
 };
 
 // ---------------------------------- описание private методов класса BinaryTree ---------------------------------------
@@ -107,13 +109,35 @@ Node<T>* BinaryTree<T>::insert(Node<T>* root, T value)
 }
 
 template <typename T>
-void BinaryTree<T>::display(Node<T> *root)
+void BinaryTree<T>::inorderTraversal(Node<T> *root)
 {
-    if (!root)
-        return;
+    if (root != NULL)
+    {
+        inorderTraversal(root->left);
+        cout << root->data << " ";
+        inorderTraversal(root->right);
+    }
+}
 
-    display(root->left);
-    cout << root->data << " ";
-    display(root->right);
+template <typename T>
+void BinaryTree<T>::preorderTraversal(Node<T> *root)
+{
+    if (root != NULL)
+    {
+        cout << root->data << " ";
+        preorderTraversal(root->left);
+        preorderTraversal(root->right);
+    }
+}
+
+template <typename T>
+void BinaryTree<T>::postorderTraversal(Node<T> *root)
+{
+    if (root != NULL)
+    {
+        postorderTraversal(root->left);
+        postorderTraversal(root->right);
+        cout << root->data << " ";
+    }
 }
 #endif

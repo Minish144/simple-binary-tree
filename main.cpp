@@ -4,16 +4,31 @@
 using namespace std;
 
 int main() {
-    BinaryTree<int> bin = BinaryTree<int>(2);
-    Node<int> *root = bin.getRoot();
-    bin.insert(root, 7);
-    bin.insert(root, 5);
-    bin.insert(root, 2);
-    bin.insert(root, 6);
-    bin.insert(root, 9);
-    bin.insert(root, 5);
-    bin.insert(root, 4);
-    bin.insert(root, 11);
-    bin.display(root);
+    cout << endl << "------ string / char tree ------";
+    BinaryTree<string> strTree = BinaryTree<string>("a");
+    Node<string> *strRoot = strTree.getRoot();
+    strTree.insert(strRoot, "b");
+    strTree.insert(strRoot, "d");
+    strTree.insert(strRoot, "g");
+    strTree.insert(strRoot, "e");
+    strTree.insert(strRoot, "g");
+    strTree.insert(strRoot, "k");
+    cout << endl << "inorder disp: "; strTree.inorderTraversal(strRoot);
+    cout << endl << "preorder disp: "; strTree.preorderTraversal(strRoot);
+    cout << endl << "postorder disp: "; strTree.postorderTraversal(strRoot);
+
+    cout << endl << endl << "-------- int tree --------";
+    BinaryTree<int> intTree = BinaryTree<int>(4);
+    Node<int> *intRoot = intTree.getRoot();
+    intTree.insert(intRoot, 6);
+    intTree.insert(intRoot, 2);
+    intTree.insert(intRoot, 8);
+    intTree.insert(intRoot, 111);
+    intTree.insert(intRoot, 0);
+    intTree.insert(intRoot, 55);
+    cout << endl << "inorder disp: "; intTree.inorderTraversal(intRoot);
+    cout << endl << "preorder disp: "; intTree.preorderTraversal(intRoot);
+    cout << endl << "postorder disp: "; intTree.postorderTraversal(intRoot);
+
     return 0;
 }
