@@ -34,14 +34,16 @@ private:
     void memoryFree(Node<T> *Node);
 
 public:
-    BinaryTree();
-    explicit BinaryTree(T value);
-    ~BinaryTree();
-    Node<T>* getRoot();
-    Node<T>* insert(Node<T> *root, T value);
-    void inorderTraversal (Node<T> *root);
-    void preorderTraversal (Node<T> *root);
-    void postorderTraversal (Node<T> *root);
+    BinaryTree(); // конструктор
+    explicit BinaryTree(T value); // конструктор с явными параметрами
+    ~BinaryTree(); // деструктор
+    Node<T>* getRoot(); // получения значения из корневого узла
+    Node<T>* insert(Node<T> *root, T value); // вставка по значению
+    void inorderTraversal (Node<T> *root); // обход узлов в отсортированном порядке
+    void preorderTraversal (Node<T> *root); // обход узлов в порядке: вершина, левое поддерево, правое поддерево
+    void postorderTraversal (Node<T> *root); // обход узлов в порядке: левое поддерево, правое поддерево, вершина
+    Node<T> *getMin(Node<T> *root); // получение указателя на узел с минимальным значением
+    Node<T> *getMax(Node<T> *root); // получение указателя на узел с максимальным значением
 };
 
 // ---------------------------------- описание private методов класса BinaryTree ---------------------------------------
@@ -139,5 +141,21 @@ void BinaryTree<T>::postorderTraversal(Node<T> *root)
         postorderTraversal(root->right);
         cout << root->data << " ";
     }
+}
+
+template <typename T>
+Node<T>* BinaryTree<T>::getMin(Node<T> *root)
+{
+    if (root->left == NULL)
+        return root;
+    return getMin(root->left);
+}
+
+template <typename T>
+Node<T>* BinaryTree<T>::getMax(Node<T> *root)
+{
+    if (root->right == NULL)
+        return root;
+    return getMax(root->right);
 }
 #endif
