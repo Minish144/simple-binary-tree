@@ -47,7 +47,7 @@ public:
     Node<T> *deleteNode(Node<T> *root, T value); // удаление по значению
     size_t count(Node<T> *root); // получение количества элементов
     Node<T> *search(Node<T> *root, T value); // получение указателя на первый элемент с указанным знаечнием
-    Node<T> *next(Node<T> *node);
+
 };
 
 // ----------------------------------- описание private методов класса BinaryTree --------------------------------------
@@ -67,7 +67,9 @@ template <typename T>
 BinaryTree<T>::BinaryTree()
 {
     this->root = new Node<T>;
-    this->root = NULL;
+    this->root->data = NULL;
+    this->root->left = NULL;
+    this->root->right = NULL;
 }
 
 template <typename T>

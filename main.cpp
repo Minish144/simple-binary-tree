@@ -20,7 +20,7 @@ int main() {
     cout << endl << "количество элементов: " << strTree.count(strRoot);
 
     cout << endl << endl << "-------- int tree --------";
-    BinaryTree<int> intTree = BinaryTree<int>(4);
+    BinaryTree<int> intTree;// = BinaryTree<int>(4);
     Node<int> *intRoot = intTree.getRoot();
     intTree.insert(intRoot, 6);
     intTree.insert(intRoot, 2);
@@ -38,8 +38,8 @@ int main() {
     intTree.deleteNode(intRoot, 111);
     cout << endl << "после удаления элемента со зн. 11: "; intTree.inorderTraversal(intRoot);
     if (intTree.search(intRoot, 51))
-        cout << endl << "found 51";
+        cout << endl << "51 was found successfully";
     else
-        cout << endl << "not found 51";
+        cout << endl << "51 was not found";
     return 0;
 }
