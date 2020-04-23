@@ -39,17 +39,19 @@ public:
     ~BinaryTree(); // деструктор
     Node<T>* getRoot(); // получения значения из корневого узла
     Node<T>* insert(T value); // вставка по значению
-    void inorderTraversal(Node<T> *node); // обход узлов в отсортированном порядке по заданному корню
-    void preorderTraversal(Node<T> *node); // обход узлов в порядке: вершина, левое поддерево, правое поддерево по заданному корню
-    void postorderTraversal(Node<T> *node); // обход узлов в порядке: левое поддерево, правое поддерево, вершина по заданному корню
-    void inorderTraversal(); // обход узлов в отсортированном порядке по заданному корню
-    void preorderTraversal(); // обход узлов в порядке: вершина, левое поддерево, правое поддерево по заданному корню
-    void postorderTraversal(); // обход узлов в порядке: левое поддерево, правое поддерево, вершина по заданному корню
-    Node<T> *getMin(Node<T> *root); // получение указателя на узел с минимальным значением
-    Node<T> *getMax(Node<T> *root); // получение указателя на узел с максимальным значением
-    Node<T> *deleteNode(Node<T> *root, T value); // удаление по значению
-    size_t count(Node<T> *root); // получение количества элементов
-    Node<T> *search(Node<T> *root, T value); // получение указателя на первый элемент с указанным знаечнием
+    void inorderTraversal(Node<T> *node); // обход узлов в отсортированном порядке по заданной ветке
+    void preorderTraversal(Node<T> *node); // обход узлов в порядке: вершина, левое поддерево, правое поддерево по заданной ветке
+    void postorderTraversal(Node<T> *node); // обход узлов в порядке: левое поддерево, правое поддерево, вершина по заданной ветке
+    void inorderTraversal(); // обход узлов в отсортированном порядке
+    void preorderTraversal(); // обход узлов в порядке: вершина, левое поддерево, правое поддерево
+    void postorderTraversal(); // обход узлов в порядке: левое поддерево, правое поддерево, вершина
+    Node<T> *getMin(Node<T> *node); // получение указателя на узел с минимальным значением по заданной ветке
+    Node<T> *getMax(Node<T> *node); // получение указателя на узел с максимальным значением по заданной ветке
+    Node<T> *getMin(); // получение указателя на узел с минимальным значением
+    Node<T> *getMax(); // получение указателя на узел с максимальным значением
+    Node<T> *deleteNode(T value); // удаление узла по значению
+    size_t count(); // получение количества элементов
+    Node<T> *search(T value); // получение указателя на узел с указанным знаечнием
     T value(Node<T> *node); // получение значения по указанному узлу
 };
 
@@ -171,34 +173,47 @@ void BinaryTree<T>::postorderTraversal ()
 }
 
 template <typename T>
-Node<T>* BinaryTree<T>::getMin(Node<T> *root)
+Node<T>* BinaryTree<T>::getMin(Node<T> *node)
 {
-    if (root->left == NULL)
-        return root;
-    return getMin(root->left);
+    if (node->left == NULL)
+        return node;
+    return getMin(node->left);
 }
 
 template <typename T>
-Node<T>* BinaryTree<T>::getMax(Node<T> *root)
+Node<T>* BinaryTree<T>::getMax(Node<T> *node)
 {
-    if (root->right == NULL)
-        return root;
-    return getMax(root->right);
+    if (node->right == NULL)
+        return node;
+    return getMax(node->right);
 }
 
 template <typename T>
-Node<T>* BinaryTree<T>::deleteNode(Node<T> *root, T value)
+Node<T>* BinaryTree<T>::getMin()
 {
+    getMin(this->root);
+}
+
+template <typename T>
+Node<T>* BinaryTree<T>::getMax()
+{
+    getMax(this->root);
+}
+
+template <typename T>
+Node<T>* BinaryTree<T>::deleteNode(T value)
+{
+    root = this->root;
     if (root == NULL)
         return root;
     if (value < root->data)
-        root->left = deleteNode(root->left, value);
+        root->left = deleteNode(value);
     else if (value > root->data)
-        root->right = deleteNode(root->right, value);
+        root->right = deleteNode(value);
     else if (root->left != NULL && root->right != NULL)
     {
         root->data = getMin(root->right)->data;
-        root->right = deleteNode(root->right, root->data);
+        root->right = deleteNode(root->data);
     }
     else
     {
@@ -213,20 +228,21 @@ Node<T>* BinaryTree<T>::deleteNode(Node<T> *root, T value)
 }
 
 template <typename T>
-size_t BinaryTree<T>::count(Node<T> *root)
+size_t BinaryTree<T>::count()
 {
     return this->nodesCount;
 }
 
 template <typename T>
-Node<T>* BinaryTree<T>::search(Node<T> *root, T value)
+Node<T>* BinaryTree<T>::search(T value)
 {
+    Node<T> *root = this->root;
     if (root == NULL || value == root->data)
         return root;
     if (value < root->data)
-        return search(root->left, value);
+        return search(value);
     else
-        return search(root->right, value);
+        return search(value);
 }
 template <typename T>
 T value(Node<T> *node)
