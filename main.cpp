@@ -17,6 +17,7 @@ int main() {
     cout << endl << "preorder disp: "; strTree.preorderTraversal(strRoot);
     cout << endl << "postorder disp: "; strTree.postorderTraversal(strRoot);
     cout << endl << "min: " << strTree.getMin(strRoot)->data << ", max: " << strTree.getMax(strRoot)->data;
+    cout << endl << "количество элементов: " << strTree.count(strRoot);
 
     cout << endl << endl << "-------- int tree --------";
     BinaryTree<int> intTree = BinaryTree<int>(4);
@@ -26,10 +27,16 @@ int main() {
     intTree.insert(intRoot, 8);
     intTree.insert(intRoot, 111);
     intTree.insert(intRoot, 0);
+    intTree.insert(intRoot, -999999);
+    intTree.insert(intRoot, 51);
     intTree.insert(intRoot, 55);
     cout << endl << "inorder disp: "; intTree.inorderTraversal(intRoot);
     cout << endl << "preorder disp: "; intTree.preorderTraversal(intRoot);
     cout << endl << "postorder disp: "; intTree.postorderTraversal(intRoot);
     cout << endl << "min: " << intTree.getMin(intRoot)->data << ", max: " << intTree.getMax(intRoot)->data;
+    cout << endl << "количество элементов: " << intTree.count(intRoot);
+
+    intTree.deleteNode(intRoot, 111);
+    cout << endl << "inorder disp: "; intTree.inorderTraversal(intRoot);
     return 0;
 }

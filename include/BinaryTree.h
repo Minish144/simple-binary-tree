@@ -44,9 +44,11 @@ public:
     void postorderTraversal (Node<T> *root); // обход узлов в порядке: левое поддерево, правое поддерево, вершина
     Node<T> *getMin(Node<T> *root); // получение указателя на узел с минимальным значением
     Node<T> *getMax(Node<T> *root); // получение указателя на узел с максимальным значением
+    Node<T> *deleteNode(Node<T> *root, T value); // удаление по значению
+    size_t count(Node<T> *root); // получение количества элементов
 };
 
-// ---------------------------------- описание private методов класса BinaryTree ---------------------------------------
+// ----------------------------------- описание private методов класса BinaryTree --------------------------------------
 template <typename T>
 void BinaryTree<T>::memoryFree(Node<T> *Node)
 {
@@ -58,7 +60,7 @@ void BinaryTree<T>::memoryFree(Node<T> *Node)
     delete Node;
 }
 
-// ----------------------------------- описание public методов класса BinaryTree ---------------------------------------
+// ------------------------------------ описание public методов класса BinaryTree --------------------------------------
 template <typename T>
 BinaryTree<T>::BinaryTree()
 {
@@ -69,6 +71,7 @@ BinaryTree<T>::BinaryTree()
 template <typename T>
 BinaryTree<T>::BinaryTree(T value)
 {
+    this->nodesCount += 1;
     this->root = new Node<T>;
     this->root->data = value;
     this->root->left = NULL;
@@ -157,5 +160,37 @@ Node<T>* BinaryTree<T>::getMax(Node<T> *root)
     if (root->right == NULL)
         return root;
     return getMax(root->right);
+}
+
+template <typename T>
+Node<T>* BinaryTree<T>::deleteNode(Node<T> *root, T value)
+{
+    if (root == NULL)
+        return root;
+    if (value < root->data)
+        root->left = deleteNode(root->left, value);
+    else if (value > root->data)
+        root->right = deleteNode(root->right, value);
+    else if (root->left != NULL && root->right != NULL)
+    {
+        root->data = getMin(root->right)->data;
+        root->right = deleteNode(root->right, root->data);
+    }
+    else
+    {
+        if (root->left != NULL)
+            root = root->left;
+        else if (root->right != NULL)
+            root = root->right;
+        else
+            root = NULL;
+    }
+    return root;
+}
+
+template <typename T>
+size_t BinaryTree<T>::count(Node<T> *root)
+{
+    return this->nodesCount;
 }
 #endif
