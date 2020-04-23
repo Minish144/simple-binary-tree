@@ -35,8 +35,11 @@ int main() {
     cout << endl << "postorder disp: "; intTree.postorderTraversal(intRoot);
     cout << endl << "min: " << intTree.getMin(intRoot)->data << ", max: " << intTree.getMax(intRoot)->data;
     cout << endl << "количество элементов: " << intTree.count(intRoot);
-
     intTree.deleteNode(intRoot, 111);
-    cout << endl << "inorder disp: "; intTree.inorderTraversal(intRoot);
+    cout << endl << "после удаления элемента со зн. 11: "; intTree.inorderTraversal(intRoot);
+    if (intTree.search(intRoot, 51))
+        cout << endl << "found 51";
+    else
+        cout << endl << "not found 51";
     return 0;
 }

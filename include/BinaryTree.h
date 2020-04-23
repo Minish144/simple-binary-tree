@@ -46,6 +46,8 @@ public:
     Node<T> *getMax(Node<T> *root); // получение указателя на узел с максимальным значением
     Node<T> *deleteNode(Node<T> *root, T value); // удаление по значению
     size_t count(Node<T> *root); // получение количества элементов
+    Node<T> *search(Node<T> *root, T value); // получение указателя на первый элемент с указанным знаечнием
+    Node<T> *next(Node<T> *node);
 };
 
 // ----------------------------------- описание private методов класса BinaryTree --------------------------------------
@@ -192,5 +194,16 @@ template <typename T>
 size_t BinaryTree<T>::count(Node<T> *root)
 {
     return this->nodesCount;
+}
+
+template <typename T>
+Node<T>* BinaryTree<T>::search(Node<T> *root, T value)
+{
+    if (root == NULL || value == root->data)
+        return root;
+    if (value < root->data)
+        return search(root->left, value);
+    else
+        return search(root->right, value);
 }
 #endif
