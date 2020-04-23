@@ -1,5 +1,6 @@
 #ifndef TREE_H
 #define TREE_H
+#define COUNT 10
 
 #include <iostream>
 
@@ -32,7 +33,7 @@ class BinaryTree
 private:
     size_t nodesCount = 0;
     Node<T> *root;
-    void memoryFree(Node<T> *Node);
+    void memoryFree(Node<T> *node);
 
 public:
     BinaryTree(); // конструктор
@@ -40,6 +41,7 @@ public:
     ~BinaryTree(); // деструктор
     Node<T>* getRoot(); // получения значения из корневого узла
     Node<T>* insert(T value); // вставка по значению
+    T value(Node<T> *node); // получение значения из узла
     void inorderTraversal(Node<T> *node); // обход узлов в отсортированном порядке по заданной ветке
     void preorderTraversal(Node<T> *node); // обход узлов в порядке: вершина, левое поддерево, правое поддерево. Вывод по заданной ветке
     void postorderTraversal(Node<T> *node); // обход узлов в порядке: левое поддерево, правое поддерево, вершина. Вывод по заданной ветке
@@ -55,19 +57,19 @@ public:
     size_t count(); // получение количества элементов
     Node<T> *search(Node<T> *node, T value); // получение указателя на первый элемент с указанным знаечнием по заданной ветке
     Node<T> *search(T value); // получение указателя на первый элемент с указанным знаечнием по заданной ветке
-    T value(Node<T> *node);
+    void clear();
 };
 
 // ----------------------------------- описание private методов класса BinaryTree --------------------------------------
 template <typename T>
-void BinaryTree<T>::memoryFree(Node<T> *Node)
+void BinaryTree<T>::memoryFree(Node<T> *node)
 {
-    if (Node == nullptr) {
+    if (node == nullptr) {
         return;
     }
-    memoryFree(Node->left);
-    memoryFree(Node->right);
-    delete Node;
+    memoryFree(node->left);
+    memoryFree(node->right);
+    delete node;
 }
 
 // ------------------------------------ описание public методов класса BinaryTree --------------------------------------
@@ -233,7 +235,7 @@ Node<T>* BinaryTree<T>::deleteNode(T value)
 template <typename T>
 Node<T>* BinaryTree<T>::deleteNode(Node<T> *node)
 {
-    return deleteNode(node->value());
+    return deleteNode(node->data());
 }
 
 template <typename T>
@@ -263,5 +265,11 @@ template <typename T>
 T BinaryTree<T>::value(Node<T> *node)
 {
     return node->data;
+}
+
+template <typename T>
+void BinaryTree<T>::clear()
+{
+    memoryFree(this->root);
 }
 #endif

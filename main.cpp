@@ -45,5 +45,7 @@ int main() {
     else
         cout << endl << "51 was not found";
     cout << endl << "количество элементов: " << intTree.count();
+    cout << endl << endl << endl << endl << endl;
+    intTree.clear();
     return 0;
 }
