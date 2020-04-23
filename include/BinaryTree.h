@@ -41,8 +41,8 @@ public:
     Node<T>* getRoot(); // получения значения из корневого узла
     Node<T>* insert(T value); // вставка по значению
     void inorderTraversal(Node<T> *node); // обход узлов в отсортированном порядке по заданной ветке
-    void preorderTraversal(Node<T> *node); // обход узлов в порядке: вершина, левое поддерево, правое поддерево по заданной ветке
-    void postorderTraversal(Node<T> *node); // обход узлов в порядке: левое поддерево, правое поддерево, вершина по заданной ветке
+    void preorderTraversal(Node<T> *node); // обход узлов в порядке: вершина, левое поддерево, правое поддерево. Вывод по заданной ветке
+    void postorderTraversal(Node<T> *node); // обход узлов в порядке: левое поддерево, правое поддерево, вершина. Вывод по заданной ветке
     void inorderTraversal(); // обход узлов в отсортированном порядке
     void preorderTraversal(); // обход узлов в порядке: вершина, левое поддерево, правое поддерево
     void postorderTraversal(); // обход узлов в порядке: левое поддерево, правое поддерево, вершина
@@ -51,6 +51,7 @@ public:
     Node<T> *getMin(); // получение указателя на узел с минимальным значением
     Node<T> *getMax(); // получение указателя на узел с максимальным значением
     Node<T> *deleteNode(T value); // удаление узла по значению
+    Node<T> *deleteNode(Node<T> *node); // удаление узла
     size_t count(); // получение количества элементов
     Node<T> *search(Node<T> *node, T value); // получение указателя на первый элемент с указанным знаечнием по заданной ветке
     Node<T> *search(T value); // получение указателя на первый элемент с указанным знаечнием по заданной ветке
@@ -227,6 +228,12 @@ Node<T>* BinaryTree<T>::deleteNode(T value)
             root = NULL;
     }
     return root;
+}
+
+template <typename T>
+Node<T>* BinaryTree<T>::deleteNode(Node<T> *node)
+{
+    return deleteNode(node->value());
 }
 
 template <typename T>

@@ -4,6 +4,8 @@
 using namespace std;
 
 int main() {
+    // ----------------------------------------------- тесты библиотеки ------------------------------------------------
+
     cout << endl << "------ string / char tree ------";
     BinaryTree<string> strTree = BinaryTree<string>("a");
     Node<string> *strRoot = strTree.getRoot();
@@ -42,5 +44,6 @@ int main() {
         cout << endl << "51 was found successfully";
     else
         cout << endl << "51 was not found";
+    cout << endl << "количество элементов: " << intTree.count();
     return 0;
 }
