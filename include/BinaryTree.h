@@ -272,4 +272,5 @@ void BinaryTree<T>::clear()
 {
     memoryFree(this->root);
 }
+
 #endif
