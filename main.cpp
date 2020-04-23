@@ -16,7 +16,8 @@ int main() {
     cout << endl << "inorder disp: "; strTree.inorderTraversal();
     cout << endl << "preorder disp: "; strTree.preorderTraversal();
     cout << endl << "postorder disp: "; strTree.postorderTraversal();
-    cout << endl << "min: " << strTree.getMin(strRoot)->data << ", max: " << strTree.getMax(strRoot)->data;
+    cout << endl << "min: " << strTree.getMin(strRoot)->value() << ", max: " << strTree.getMax(strRoot)->value();
+    cout << endl << "value: " << strTree.value(strRoot);
     cout << endl << "количество элементов: " << strTree.count();
 
     cout << endl << endl << "-------- int tree --------";
@@ -33,7 +34,7 @@ int main() {
     cout << endl << "inorder disp: "; intTree.inorderTraversal();
     cout << endl << "preorder disp: "; intTree.preorderTraversal();
     cout << endl << "postorder disp: "; intTree.postorderTraversal();
-    cout << endl << "min: " << intTree.getMin(intRoot)->data << ", max: " << intTree.getMax(intRoot)->data;
+    cout << endl << "min: " << intTree.getMin(intRoot)->value() << ", max: " << intTree.getMax(intRoot)->value();
     cout << endl << "количество элементов: " << intTree.count();
     intTree.deleteNode(111);
     cout << endl << "после удаления элемента со зн. 11: "; intTree.inorderTraversal(intRoot);

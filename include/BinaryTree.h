@@ -12,6 +12,7 @@ struct Node
     T data;
     Node *right;
     Node *left;
+    T value() { return data; }
 };
 
 template <typename T>
@@ -51,8 +52,9 @@ public:
     Node<T> *getMax(); // получение указателя на узел с максимальным значением
     Node<T> *deleteNode(T value); // удаление узла по значению
     size_t count(); // получение количества элементов
-    Node<T> *search(T value); // получение указателя на узел с указанным знаечнием
-    T value(Node<T> *node); // получение значения по указанному узлу
+    Node<T> *search(Node<T> *node, T value); // получение указателя на первый элемент с указанным знаечнием по заданной ветке
+    Node<T> *search(T value); // получение указателя на первый элемент с указанным знаечнием по заданной ветке
+    T value(Node<T> *node);
 };
 
 // ----------------------------------- описание private методов класса BinaryTree --------------------------------------
@@ -234,18 +236,24 @@ size_t BinaryTree<T>::count()
 }
 
 template <typename T>
+Node<T>* BinaryTree<T>::search(Node<T> *node, T value)
+{
+    if (node == NULL || value == node->data)
+        return node;
+    if (value < node->data)
+        return search(node->left, value);
+    else
+        return search(node->right, value);
+}
+
+template <typename T>
 Node<T>* BinaryTree<T>::search(T value)
 {
-    Node<T> *root = this->root;
-    if (root == NULL || value == root->data)
-        return root;
-    if (value < root->data)
-        return search(value);
-    else
-        return search(value);
+    return search(this->root, value);
 }
+
 template <typename T>
-T value(Node<T> *node)
+T BinaryTree<T>::value(Node<T> *node)
 {
     return node->data;
 }
