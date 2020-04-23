@@ -38,16 +38,19 @@ public:
     explicit BinaryTree(T value); // конструктор с явными параметрами
     ~BinaryTree(); // деструктор
     Node<T>* getRoot(); // получения значения из корневого узла
-    Node<T>* insert(Node<T> *root, T value); // вставка по значению
-    void inorderTraversal (Node<T> *root); // обход узлов в отсортированном порядке
-    void preorderTraversal (Node<T> *root); // обход узлов в порядке: вершина, левое поддерево, правое поддерево
-    void postorderTraversal (Node<T> *root); // обход узлов в порядке: левое поддерево, правое поддерево, вершина
+    Node<T>* insert(T value); // вставка по значению
+    void inorderTraversal(Node<T> *node); // обход узлов в отсортированном порядке по заданному корню
+    void preorderTraversal(Node<T> *node); // обход узлов в порядке: вершина, левое поддерево, правое поддерево по заданному корню
+    void postorderTraversal(Node<T> *node); // обход узлов в порядке: левое поддерево, правое поддерево, вершина по заданному корню
+    void inorderTraversal(); // обход узлов в отсортированном порядке по заданному корню
+    void preorderTraversal(); // обход узлов в порядке: вершина, левое поддерево, правое поддерево по заданному корню
+    void postorderTraversal(); // обход узлов в порядке: левое поддерево, правое поддерево, вершина по заданному корню
     Node<T> *getMin(Node<T> *root); // получение указателя на узел с минимальным значением
     Node<T> *getMax(Node<T> *root); // получение указателя на узел с максимальным значением
     Node<T> *deleteNode(Node<T> *root, T value); // удаление по значению
     size_t count(Node<T> *root); // получение количества элементов
     Node<T> *search(Node<T> *root, T value); // получение указателя на первый элемент с указанным знаечнием
-
+    T value(Node<T> *node); // получение значения по указанному узлу
 };
 
 // ----------------------------------- описание private методов класса BinaryTree --------------------------------------
@@ -95,11 +98,11 @@ Node<T>* BinaryTree<T>::getRoot()
 }
 
 template <typename T>
-Node<T>* BinaryTree<T>::insert(Node<T>* root, T value)
+Node<T>* BinaryTree<T>::insert(T value)
 {
     this->nodesCount += 1;
     Node<T>* tmp = newNode(value);
-    Node<T>* x = root;
+    Node<T>* x = this->root;
     Node<T>* y = NULL;
     while (x != NULL) {
         y = x;
@@ -118,36 +121,53 @@ Node<T>* BinaryTree<T>::insert(Node<T>* root, T value)
 }
 
 template <typename T>
-void BinaryTree<T>::inorderTraversal(Node<T> *root)
+void BinaryTree<T>::inorderTraversal(Node<T> *node)
 {
-    if (root != NULL)
+    if (node != NULL)
     {
-        inorderTraversal(root->left);
-        cout << root->data << " ";
-        inorderTraversal(root->right);
+        inorderTraversal(node->left);
+        cout << node->data << " ";
+        inorderTraversal(node->right);
     }
 }
 
 template <typename T>
-void BinaryTree<T>::preorderTraversal(Node<T> *root)
+void BinaryTree<T>::preorderTraversal(Node<T> *node)
 {
-    if (root != NULL)
+    if (node != NULL)
     {
-        cout << root->data << " ";
-        preorderTraversal(root->left);
-        preorderTraversal(root->right);
+        cout << node->data << " ";
+        preorderTraversal(node->left);
+        preorderTraversal(node->right);
     }
 }
 
 template <typename T>
-void BinaryTree<T>::postorderTraversal(Node<T> *root)
+void BinaryTree<T>::postorderTraversal(Node<T> *node)
 {
-    if (root != NULL)
+    if (node != NULL)
     {
-        postorderTraversal(root->left);
-        postorderTraversal(root->right);
-        cout << root->data << " ";
+        postorderTraversal(node->left);
+        postorderTraversal(node->right);
+        cout << node->data << " ";
     }
+}
+template <typename T>
+void BinaryTree<T>::inorderTraversal ()
+{
+    inorderTraversal(this->root);
+}
+
+template <typename T>
+void BinaryTree<T>::preorderTraversal ()
+{
+    preorderTraversal(this->root);
+}
+
+template <typename T>
+void BinaryTree<T>::postorderTraversal ()
+{
+    postorderTraversal(this->root);
 }
 
 template <typename T>
@@ -207,5 +227,10 @@ Node<T>* BinaryTree<T>::search(Node<T> *root, T value)
         return search(root->left, value);
     else
         return search(root->right, value);
+}
+template <typename T>
+T value(Node<T> *node)
+{
+    return node->data;
 }
 #endif
