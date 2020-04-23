@@ -10,29 +10,39 @@ template <typename T>
 struct Node
 {
     T data;
-    Node *right = nullptr;
-    Node *left = nullptr;
-    Node *parent = nullptr;
+    Node *right;
+    Node *left;
 };
 
-// объявление класса двоичного дерева ----------------------------------------------------------------------------------
+template <typename T>
+Node<T>* newNode(T value)
+{
+    auto* temp = new Node<T>;
+    temp->data = value;
+    temp->left = NULL;
+    temp->right = NULL;
+    return temp;
+}
+
+// --------------------------------------- объявление класса двоичного дерева ------------------------------------------
 template <typename T>
 class BinaryTree
 {
 private:
+    size_t nodesCount = 0;
     Node<T> *root;
     void memoryFree(Node<T> *Node);
-    void setRoot(T value);
 
 public:
     BinaryTree();
     explicit BinaryTree(T value);
     ~BinaryTree();
-    void rootPrint();
-    void insert(T value);
+    Node<T>* getRoot();
+    Node<T>* insert(Node<T> *root, T value);
+    void display(Node<T> *root);
 };
 
-// описание private методов класса BinaryTree --------------------------------------------------------------------------
+// ---------------------------------- описание private методов класса BinaryTree ---------------------------------------
 template <typename T>
 void BinaryTree<T>::memoryFree(Node<T> *Node)
 {
@@ -44,18 +54,12 @@ void BinaryTree<T>::memoryFree(Node<T> *Node)
     delete Node;
 }
 
-template <typename T>
-void BinaryTree<T>::setRoot(T value)
-{
-    this->root->data = value;
-}
-
-// описание public методов класса BinaryTree ---------------------------------------------------------------------------
+// ----------------------------------- описание public методов класса BinaryTree ---------------------------------------
 template <typename T>
 BinaryTree<T>::BinaryTree()
 {
     this->root = new Node<T>;
-    this->root = nullptr;
+    this->root = NULL;
 }
 
 template <typename T>
@@ -63,8 +67,8 @@ BinaryTree<T>::BinaryTree(T value)
 {
     this->root = new Node<T>;
     this->root->data = value;
-    this->root->left = nullptr;
-    this->root->right = nullptr;
+    this->root->left = NULL;
+    this->root->right = NULL;
 }
 
 template <typename T>
@@ -74,23 +78,42 @@ BinaryTree<T>::~BinaryTree<T>()
 }
 
 template <typename T>
-void BinaryTree<T>::rootPrint()
+Node<T>* BinaryTree<T>::getRoot()
 {
-    if (this->root == nullptr)
-        cout << "nullptr";
-    else
-        cout << root->data;
+    return root;
 }
 
 template <typename T>
-void BinaryTree<T>::insert(T value)
+Node<T>* BinaryTree<T>::insert(Node<T>* root, T value)
 {
-    if (this->root == nullptr)
-    {
-        root = new Node<T>;
-        root->data = value;
-        cout << root->data;
+    this->nodesCount += 1;
+    Node<T>* tmp = newNode(value);
+    Node<T>* x = root;
+    Node<T>* y = NULL;
+    while (x != NULL) {
+        y = x;
+        if (value < x->data)
+            x = x->left;
+        else
+            x = x->right;
     }
+    if (y == NULL)
+        y = tmp;
+    else if (value < y->data)
+        y->left = tmp;
+    else
+        y->right = tmp;
+    return y;
 }
 
+template <typename T>
+void BinaryTree<T>::display(Node<T> *root)
+{
+    if (!root)
+        return;
+
+    display(root->left);
+    cout << root->data << " ";
+    display(root->right);
+}
 #endif
