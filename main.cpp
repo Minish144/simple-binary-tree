@@ -4,8 +4,6 @@
 using namespace std;
 
 int main() {
-    // ----------------------------------------------- тесты библиотеки ------------------------------------------------
-
     cout << endl << "------ string / char tree ------";
     BinaryTree<string> strTree = BinaryTree<string>("a");
     Node<string> *strRoot = strTree.getRoot();
@@ -19,11 +17,10 @@ int main() {
     cout << endl << "preorder disp: "; strTree.preorderTraversal();
     cout << endl << "postorder disp: "; strTree.postorderTraversal();
     cout << endl << "min: " << strTree.getMin()->value() << ", max: " << strTree.getMax()->value();
-    cout << endl << "value: " << strTree.value(strRoot);
     cout << endl << "количество элементов: " << strTree.count();
 
     cout << endl << endl << "-------- int tree --------";
-    BinaryTree<int> intTree;// = BinaryTree<int>(4);
+    BinaryTree<int> intTree;
     Node<int> *intRoot = intTree.getRoot();
     intTree.insert(6);
     intTree.insert(2);
@@ -39,13 +36,13 @@ int main() {
     cout << endl << "min: " << intTree.getMin()->value() << ", max: " << intTree.getMax()->value();
     cout << endl << "количество элементов: " << intTree.count();
     intTree.deleteNode(111);
-    cout << endl << "после удаления элемента со зн. 11: "; intTree.inorderTraversal(intRoot);
+    cout << endl << "после удаления элемента со зн. 11: "; intTree.inorderTraversal();
+
     if (intTree.search(51))
         cout << endl << "51 was found successfully";
     else
         cout << endl << "51 was not found";
-    cout << endl << "количество элементов: " << intTree.count();
-    cout << endl << endl << endl << endl << endl;
-    intTree.clear();
+
+    cout << endl;
     return 0;
 }

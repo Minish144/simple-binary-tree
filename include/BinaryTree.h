@@ -1,6 +1,5 @@
 #ifndef TREE_H
 #define TREE_H
-#define COUNT 10
 
 #include <iostream>
 
@@ -13,7 +12,7 @@ struct Node
     T data;
     Node *right;
     Node *left;
-    T value() { return data; }
+    T value() { return data; };
 };
 
 template <typename T>
@@ -33,7 +32,14 @@ class BinaryTree
 private:
     size_t nodesCount = 0;
     Node<T> *root;
-    void memoryFree(Node<T> *node);
+    void memoryFree(Node<T> *Node);
+    Node<T> *deleteNode(Node<T> *root, T value);
+    Node<T> *getMin(Node<T> *root);
+    Node<T> *getMax(Node<T> *root);
+    void inorderTraversal(Node<T> *node);
+    void preorderTraversal(Node<T> *node);
+    void postorderTraversal(Node<T> *node);
+    Node<T> *search(Node<T> *root, T value);
 
 public:
     BinaryTree(); // конструктор
@@ -41,35 +47,113 @@ public:
     ~BinaryTree(); // деструктор
     Node<T>* getRoot(); // получения значения из корневого узла
     Node<T>* insert(T value); // вставка по значению
-    T value(Node<T> *node); // получение значения из узла
-    void inorderTraversal(Node<T> *node); // обход узлов в отсортированном порядке по заданной ветке
-    void preorderTraversal(Node<T> *node); // обход узлов в порядке: вершина, левое поддерево, правое поддерево. Вывод по заданной ветке
-    void postorderTraversal(Node<T> *node); // обход узлов в порядке: левое поддерево, правое поддерево, вершина. Вывод по заданной ветке
-    void inorderTraversal(); // обход узлов в отсортированном порядке
-    void preorderTraversal(); // обход узлов в порядке: вершина, левое поддерево, правое поддерево
-    void postorderTraversal(); // обход узлов в порядке: левое поддерево, правое поддерево, вершина
-    Node<T> *getMin(Node<T> *node); // получение указателя на узел с минимальным значением по заданной ветке
-    Node<T> *getMax(Node<T> *node); // получение указателя на узел с максимальным значением по заданной ветке
+    void inorderTraversal(); // обход узлов в отсортированном порядке по заданному корню
+    void preorderTraversal(); // обход узлов в порядке: вершина, левое поддерево, правое поддерево по заданному корню
+    void postorderTraversal(); // обход узлов в порядке: левое поддерево, правое поддерево, вершина по заданному корню
+    Node<T> *deleteNode(T value); // удаление по значению
     Node<T> *getMin(); // получение указателя на узел с минимальным значением
     Node<T> *getMax(); // получение указателя на узел с максимальным значением
-    Node<T> *deleteNode(T value); // удаление узла по значению
-    Node<T> *deleteNode(Node<T> *node); // удаление узла
     size_t count(); // получение количества элементов
-    Node<T> *search(Node<T> *node, T value); // получение указателя на первый элемент с указанным знаечнием по заданной ветке
-    Node<T> *search(T value); // получение указателя на первый элемент с указанным знаечнием по заданной ветке
-    void clear();
+    Node<T> *search(T value); // получение указателя на первый элемент с указанным знаечнием
+    T value(Node<T> *node); // получение значения по указанному узлу
 };
 
 // ----------------------------------- описание private методов класса BinaryTree --------------------------------------
 template <typename T>
-void BinaryTree<T>::memoryFree(Node<T> *node)
+void BinaryTree<T>::memoryFree(Node<T> *Node)
 {
-    if (node == nullptr) {
+    if (Node == nullptr) {
         return;
     }
-    memoryFree(node->left);
-    memoryFree(node->right);
-    delete node;
+    memoryFree(Node->left);
+    memoryFree(Node->right);
+    delete Node;
+}
+
+template <typename T>
+Node<T>* BinaryTree<T>::deleteNode(Node<T> *root, T value)
+{
+    if (root == NULL)
+        return root;
+    if (value < root->data)
+        root->left = deleteNode(root->left, value);
+    else if (value > root->data)
+        root->right = deleteNode(root->right, value);
+    else if (root->left != NULL && root->right != NULL)
+    {
+        root->data = getMin(root->right)->data;
+        root->right = deleteNode(root->right, root->data);
+    }
+    else
+    {
+        if (root->left != NULL)
+            root = root->left;
+        else if (root->right != NULL)
+            root = root->right;
+        else
+            root = NULL;
+    }
+    return root;
+}
+
+template <typename T>
+Node<T>* BinaryTree<T>::getMin(Node<T> *root)
+{
+    if (root->left == NULL)
+        return root;
+    return getMin(root->left);
+}
+
+template <typename T>
+Node<T>* BinaryTree<T>::getMax(Node<T> *root)
+{
+    if (root->right == NULL)
+        return root;
+    return getMax(root->right);
+}
+
+template <typename T>
+void BinaryTree<T>::inorderTraversal(Node<T> *node)
+{
+    if (node != NULL)
+    {
+        inorderTraversal(node->left);
+        cout << node->data << " ";
+        inorderTraversal(node->right);
+    }
+}
+
+template <typename T>
+void BinaryTree<T>::preorderTraversal(Node<T> *node)
+{
+    if (node != NULL)
+    {
+        cout << node->data << " ";
+        preorderTraversal(node->left);
+        preorderTraversal(node->right);
+    }
+}
+
+template <typename T>
+void BinaryTree<T>::postorderTraversal(Node<T> *node)
+{
+    if (node != NULL)
+    {
+        postorderTraversal(node->left);
+        postorderTraversal(node->right);
+        cout << node->data << " ";
+    }
+}
+
+template <typename T>
+Node<T>* BinaryTree<T>::search(Node<T> *root, T value)
+{
+    if (root == NULL || value == root->data)
+        return root;
+    if (value < root->data)
+        return search(root->left, value);
+    else
+        return search(root->right, value);
 }
 
 // ------------------------------------ описание public методов класса BinaryTree --------------------------------------
@@ -128,38 +212,6 @@ Node<T>* BinaryTree<T>::insert(T value)
 }
 
 template <typename T>
-void BinaryTree<T>::inorderTraversal(Node<T> *node)
-{
-    if (node != NULL)
-    {
-        inorderTraversal(node->left);
-        cout << node->data << " ";
-        inorderTraversal(node->right);
-    }
-}
-
-template <typename T>
-void BinaryTree<T>::preorderTraversal(Node<T> *node)
-{
-    if (node != NULL)
-    {
-        cout << node->data << " ";
-        preorderTraversal(node->left);
-        preorderTraversal(node->right);
-    }
-}
-
-template <typename T>
-void BinaryTree<T>::postorderTraversal(Node<T> *node)
-{
-    if (node != NULL)
-    {
-        postorderTraversal(node->left);
-        postorderTraversal(node->right);
-        cout << node->data << " ";
-    }
-}
-template <typename T>
 void BinaryTree<T>::inorderTraversal ()
 {
     inorderTraversal(this->root);
@@ -178,64 +230,21 @@ void BinaryTree<T>::postorderTraversal ()
 }
 
 template <typename T>
-Node<T>* BinaryTree<T>::getMin(Node<T> *node)
-{
-    if (node->left == NULL)
-        return node;
-    return getMin(node->left);
-}
-
-template <typename T>
-Node<T>* BinaryTree<T>::getMax(Node<T> *node)
-{
-    if (node->right == NULL)
-        return node;
-    return getMax(node->right);
-}
-
-template <typename T>
 Node<T>* BinaryTree<T>::getMin()
 {
-    getMin(this->root);
+    return getMin(this->root);
 }
 
 template <typename T>
 Node<T>* BinaryTree<T>::getMax()
 {
-    getMax(this->root);
+    return getMax(root->right);
 }
 
 template <typename T>
 Node<T>* BinaryTree<T>::deleteNode(T value)
 {
-    root = this->root;
-    if (root == NULL)
-        return root;
-    if (value < root->data)
-        root->left = deleteNode(value);
-    else if (value > root->data)
-        root->right = deleteNode(value);
-    else if (root->left != NULL && root->right != NULL)
-    {
-        root->data = getMin(root->right)->data;
-        root->right = deleteNode(root->data);
-    }
-    else
-    {
-        if (root->left != NULL)
-            root = root->left;
-        else if (root->right != NULL)
-            root = root->right;
-        else
-            root = NULL;
-    }
-    return root;
-}
-
-template <typename T>
-Node<T>* BinaryTree<T>::deleteNode(Node<T> *node)
-{
-    return deleteNode(node->data());
+    deleteNode(this->root, value);
 }
 
 template <typename T>
@@ -245,32 +254,14 @@ size_t BinaryTree<T>::count()
 }
 
 template <typename T>
-Node<T>* BinaryTree<T>::search(Node<T> *node, T value)
-{
-    if (node == NULL || value == node->data)
-        return node;
-    if (value < node->data)
-        return search(node->left, value);
-    else
-        return search(node->right, value);
-}
-
-template <typename T>
 Node<T>* BinaryTree<T>::search(T value)
 {
     return search(this->root, value);
 }
 
 template <typename T>
-T BinaryTree<T>::value(Node<T> *node)
+T value(Node<T> *node)
 {
     return node->data;
 }
-
-template <typename T>
-void BinaryTree<T>::clear()
-{
-    memoryFree(this->root);
-}
-
 #endif
