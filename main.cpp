@@ -5,11 +5,11 @@ using namespace std;
 
 int main() {
     cout << endl << "------ string / char tree ------";
-    BinaryTree<string> strTree = BinaryTree<string>("a");
+    BinaryTree<string> strTree = BinaryTree<string>("f");
     Node<string> *strRoot = strTree.getRoot();
     strTree.insert("b");
     strTree.insert("d");
-    strTree.insert("g");
+    strTree.insert("a");
     strTree.insert("e");
     strTree.insert("g");
     strTree.insert("k");
@@ -17,7 +17,10 @@ int main() {
     cout << endl << "preorder disp: "; strTree.preorderTraversal();
     cout << endl << "postorder disp: "; strTree.postorderTraversal();
     cout << endl << "min: " << strTree.getMin()->value() << ", max: " << strTree.getMax()->value();
+    BinaryTree<string>::Iterator iter = strTree.begin();
+    cout << endl << "Значение из итератора: " << iter.value();
     cout << endl << "количество элементов: " << strTree.count();
+
 
     cout << endl << endl << "-------- int tree --------";
     BinaryTree<int> intTree;

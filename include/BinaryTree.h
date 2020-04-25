@@ -7,8 +7,9 @@ using namespace std;
 
 // структура узла двоичного дерева
 template <typename T>
-struct Node
+class Node
 {
+public:
     T data;
     Node *right;
     Node *left;
@@ -32,6 +33,7 @@ class BinaryTree
 private:
     size_t nodesCount = 0;
     Node<T> *root;
+
     void memoryFree(Node<T> *Node);
     Node<T> *deleteNode(Node<T> *root, T value);
     Node<T> *getMin(Node<T> *root);
@@ -56,6 +58,34 @@ public:
     size_t count(); // получение количества элементов
     Node<T> *search(T value); // получение указателя на первый элемент с указанным знаечнием
     T value(Node<T> *node); // получение значения по указанному узлу
+
+    class Iterator {
+    private:
+        Node<T>* current;
+    public:
+        Iterator()
+        {
+            this->current = new Node<T>;
+        };
+
+        void set(Node<T>* node)
+        {
+            this->current = node;
+        };
+
+        T value()
+        {
+            return this->current->value();
+        }
+    };
+
+    Iterator begin()
+    {
+        Iterator tmp;
+        tmp.set(this->root);
+        return tmp;
+    }
+
 };
 
 // ----------------------------------- описание private методов класса BinaryTree --------------------------------------
@@ -185,7 +215,7 @@ BinaryTree<T>::~BinaryTree<T>()
 template <typename T>
 Node<T>* BinaryTree<T>::getRoot()
 {
-    return root;
+    return this->root;
 }
 
 template <typename T>
@@ -244,7 +274,7 @@ Node<T>* BinaryTree<T>::getMax()
 template <typename T>
 Node<T>* BinaryTree<T>::deleteNode(T value)
 {
-    deleteNode(this->root, value);
+    return deleteNode(this->root, value);
 }
 
 template <typename T>
@@ -260,8 +290,9 @@ Node<T>* BinaryTree<T>::search(T value)
 }
 
 template <typename T>
-T value(Node<T> *node)
+T BinaryTree<T>::value(Node<T> *node)
 {
     return node->data;
 }
+
 #endif
