@@ -59,33 +59,9 @@ public:
     Node<T> *search(T value); // получение указателя на первый элемент с указанным знаечнием
     T value(Node<T> *node); // получение значения по указанному узлу
 
-    class Iterator {
-    private:
-        Node<T>* current;
-    public:
-        Iterator()
-        {
-            this->current = new Node<T>;
-        };
-
-        void set(Node<T>* node)
-        {
-            this->current = node;
-        };
-
-        T value()
-        {
-            return this->current->value();
-        }
-    };
-
-    Iterator begin()
-    {
-        Iterator tmp;
-        tmp.set(this->root);
-        return tmp;
-    }
-
+    class Iterator;
+    Iterator begin();
+    Iterator end();
 };
 
 // ----------------------------------- описание private методов класса BinaryTree --------------------------------------
@@ -293,6 +269,65 @@ template <typename T>
 T BinaryTree<T>::value(Node<T> *node)
 {
     return node->data;
+}
+
+// ------------------------------ описание методов итератора / для работы с итератором ---------------------------------
+template <typename T>
+class BinaryTree<T>::Iterator
+{
+    Node<T>* current;
+public:
+    Iterator() { this->current = new Node<T>; };
+    void set(Node<T>* node);
+    T value();
+    bool isLeaf();
+    void next();
+};
+
+template <typename T>
+typename BinaryTree<T>::Iterator BinaryTree<T>::begin()
+{
+    Iterator tmp;
+    tmp.set(this->root);
+    return tmp;
+}
+
+template <typename T>
+typename BinaryTree<T>::Iterator BinaryTree<T>::end()
+{
+    Iterator tmp;
+    tmp.set(getMax());
+    return tmp;
+}
+
+template <typename T>
+void BinaryTree<T>::Iterator::set(Node<T>* node)
+{
+    this->current = node;
+};
+
+template <typename T>
+T BinaryTree<T>::Iterator::value()
+{
+    return this->current->value();
+}
+
+template <typename T>
+bool BinaryTree<T>::Iterator::isLeaf()
+{
+    if (this->current->left == NULL || this->current->right == NULL)
+        return true;
+    else
+        return false;
+}
+
+template <typename T>
+void BinaryTree<T>::Iterator::next()
+{
+    if (this->current->right != NULL)
+        this->current = this->current->right;
+    else
+        return;
 }
 
 #endif

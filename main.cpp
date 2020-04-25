@@ -18,6 +18,7 @@ int main() {
     cout << endl << "postorder disp: "; strTree.postorderTraversal();
     cout << endl << "min: " << strTree.getMin()->value() << ", max: " << strTree.getMax()->value();
     BinaryTree<string>::Iterator iter = strTree.begin();
+    iter.next();
     cout << endl << "Значение из итератора: " << iter.value();
     cout << endl << "количество элементов: " << strTree.count();
 
