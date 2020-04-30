@@ -4,7 +4,7 @@
 using namespace std;
 
 template <typename T>
-int func(Node<T>* node) { cout << node->value(); return 0; };
+int func(Node<T>* node) { cout << node->value() << ", "; return 0; };
 
 int main() {
     cout << endl << "------ string / char tree ------";
@@ -20,13 +20,10 @@ int main() {
     cout << endl << "preorder disp: "; strTree.preorderTraversal();
     cout << endl << "postorder disp: "; strTree.postorderTraversal();
     cout << endl << "min: " << strTree.getMin()->value() << ", max: " << strTree.getMax()->value();
-    BinaryTree<string>::Iterator iter = strTree.begin();
+    BinaryTree<string >::Iterator iter = strTree.begin();
     iter.next();
     cout << endl << "Значение из итератора: " << iter.value();
     cout << endl << "количество элементов: " << strTree.count();
-
-    cout << endl << "output: ";
-    strTree.inorderTraversalFunc(strRoot, func);
 
     cout << endl << endl << "-------- int tree --------";
     BinaryTree<int> intTree;
