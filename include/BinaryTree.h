@@ -52,6 +52,7 @@ public:
     void inorderTraversal(); // обход узлов в отсортированном порядке по заданному корню
     void preorderTraversal(); // обход узлов в порядке: вершина, левое поддерево, правое поддерево по заданному корню
     void postorderTraversal(); // обход узлов в порядке: левое поддерево, правое поддерево, вершина по заданному корню
+    void inorderTraversalFunc(Node<T> *node, int (*foo)(Node<T>*));
     Node<T> *deleteNode(T value); // удаление по значению
     Node<T> *getMin(); // получение указателя на узел с минимальным значением
     Node<T> *getMax(); // получение указателя на узел с максимальным значением
@@ -66,9 +67,21 @@ public:
 
 // ----------------------------------- описание private методов класса BinaryTree --------------------------------------
 template <typename T>
+void BinaryTree<T>::inorderTraversalFunc(Node<T> *node, int (*foo)(Node<T>*))
+{
+    if (node != NULL)
+    {
+        inorderTraversalFunc(node->left, foo);
+        foo(node);
+        inorderTraversalFunc(node->right, foo);
+    }
+}
+
+
+template <typename T>
 void BinaryTree<T>::memoryFree(Node<T> *Node)
 {
-    if (Node == nullptr) {
+    if (Node == NULL) {
         return;
     }
     memoryFree(Node->left);
@@ -315,7 +328,7 @@ T BinaryTree<T>::Iterator::value()
 template <typename T>
 bool BinaryTree<T>::Iterator::isLeaf()
 {
-    if (this->current->left == NULL || this->current->right == NULL)
+    if (this->current->left == this->current->right == NULL)
         return true;
     else
         return false;
@@ -326,8 +339,6 @@ void BinaryTree<T>::Iterator::next()
 {
     if (this->current->right != NULL)
         this->current = this->current->right;
-    else
-        return;
 }
 
 #endif

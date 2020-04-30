@@ -3,6 +3,9 @@
 
 using namespace std;
 
+template <typename T>
+int func(Node<T>* node) { cout << node->value(); return 0; };
+
 int main() {
     cout << endl << "------ string / char tree ------";
     BinaryTree<string> strTree = BinaryTree<string>("f");
@@ -22,6 +25,8 @@ int main() {
     cout << endl << "Значение из итератора: " << iter.value();
     cout << endl << "количество элементов: " << strTree.count();
 
+    cout << endl << "output: ";
+    strTree.inorderTraversalFunc(strRoot, func);
 
     cout << endl << endl << "-------- int tree --------";
     BinaryTree<int> intTree;
